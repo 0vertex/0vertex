@@ -3,7 +3,7 @@ title: "PropertyWrapper"
 description: ""
 date: 2021-11-07T10:25:06+05:30
 draft: true
-tags: ["Array, Property"]
+tags: ["Array", "Property"]
 categories: ["Swift"]
 author: "Manish"
 ---
