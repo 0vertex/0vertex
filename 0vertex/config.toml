@@ -1,0 +1,14 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'My New Hugo Site'
+
+[related]
+threshold = 80
+includeNewer = true
+toLower = false
+[[related.indices]]
+name  = "tags"
+weight = 100
+[[related.indices]]
+name  = "categories"
+weight = 140

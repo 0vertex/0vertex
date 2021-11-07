@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- head -->
+    {{ partial "head" }}
+</head>
+<body class="container" >
+    <!-- header -->
+    {{ partial "header" (dict "Kind" .Kind "Template" "List") }}
+    <!-- Article List items -->
+    {{ range .Pages }}
+        <article class="article" >
+            <!-- title -->
+            <h2><a class="title" href="{{.RelPermalink}}">{{.Title}}</a></h1>
+            
+            <div class="time-tag-section">
+                <!-- Date -->
+                <time class="low-info-text" >{{ .Date | time.Format ":date_long" }}</time>
+                <!-- total read time -->
+                <span class="low-info-text" > - {{ .ReadingTime }} min(Est.)</span>
+
+                <div class="tag-section" >
+                    <!-- Tags -->
+                    {{ if .Params.tags }}
+                        {{range .Params.tags}}
+                            <a class="badge" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a> 
+                        {{end}}
+                    {{end}}
+                    <!-- Categories -->
+                    {{ if .Params.categories }}
+                        {{range .Params.categories}}
+                            <a class="badge" href="{{ "/categories/" | relLangURL }}{{ . | urlize }}">{{ . }}</a> 
+                        {{end}}
+                    {{end}}
+                </div>
+            </div>
+            
+            <!-- Summary -->
+            <p>{{.Summary}} <a href="{{.RelPermalink}}">read more...</a></p>
+        </article>
+    {{ end }}
+    <!-- footer -->
+    {{ partial "footer" }}
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- head -->
+    {{ partial "head" }}
+</head>
+<body class="container">
+    <!-- header -->
+    {{ partial "header" (dict "Kind" .Kind "Template" "Single") }}
+    <!-- article -->
+    <article class="article">
+        <!-- title -->
+        <h2><a class="title" href="{{.RelPermalink}}">{{.Title}}</a></h1>
+        <p class="time-info" >
+            <!-- Date -->
+            <time class="low-info-text" >Written on: {{ .Date | time.Format ":date_long" }}</time>
+            <!-- author -->
+            {{if .Params.author}} 
+            <span class="low-info-text">by: </span>
+            <a class="low-info-text" href="/about" >{{.Params.Author}}</a>
+            {{end}}
+            <!-- total read time -->
+            <span class="low-info-text" > - {{ .ReadingTime }} min(Est.)</span>
+            <!-- Tags -->
+        </p>
+
+        <!-- content -->
+        {{.Content}}
+    </article>
+
+    <!-- Related Posts -->
+    {{ $related := .Site.RegularPages.Related . | first 5 }}
+    {{ with $related }}
+    <h3>See Also</h3>
+    <ul>
+    {{ range . }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+    </ul>
+    {{ end }}
+
+    <!-- footer -->
+    {{ partial "footer" }}
+</body>
+</html>
