@@ -3,6 +3,7 @@
 <head>
     <!-- head -->
     {{ partial "head" }}
+    <link rel="stylesheet" href="/css/single.css">
 </head>
 <body class="container">
     <!-- header -->
@@ -28,6 +29,25 @@
         {{.Content}}
     </article>
 
+    <!-- Previous next post -->
+    {{ if .Params.tags }} 
+    <div class="prev-next-section" >
+        {{ if .PrevPage }}
+        <div class="prev-next-post previous-post">
+            <h4>Previous Article</h4>
+            <a class="link-reverse" href="{{ .PrevPage.Permalink }}?ref=footer">{{ .PrevPage.Title | truncate 50 "..."}}</a>
+        </div>
+        {{ end }}
+
+        {{ if .NextPage }}
+        <div class="prev-next-post next-post">
+            <h4>Next Article</h4>
+            <a class="link-reverse" href="{{ .NextPage.Permalink }}?ref=footer">{{ .NextPage.Title | truncate 50 "..." }}</a>
+        </div>
+        {{ end }}
+    </div>
+    {{ end }}
+    
     <!-- Related Posts -->
     {{ $related := .Site.RegularPages.Related . | first 5 }}
     {{ with $related }}

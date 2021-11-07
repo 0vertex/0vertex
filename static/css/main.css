@@ -120,6 +120,10 @@ blockquote:before {
     font-weight: 700;
 }
 
+blockquote > p {
+    padding-bottom: 8px;
+}
+
 /* table */
 table {
     width: 100%;
@@ -140,8 +144,17 @@ td {
 }
 
 /* syntax */
+p > code {
+    font-size: 80%;
+    padding: 0.1rem 0.25rem;
+    padding-bottom: 0.15rem;
+    background: rgb(99, 99, 99);
+    border-radius: 4px;
+    color: white;
+}
+
 .highlight > pre {
-    padding: 10px 20px;
+    padding: 15px 20px;
     border-radius: 5px;
 }
 

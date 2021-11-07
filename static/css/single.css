@@ -1,0 +1,17 @@
+.prev-next-section {
+    display: inline-block; 
+    width: 100%;
+}
+
+.prev-next-post {
+    margin-top: 2rem;
+    max-width: 40%;
+}
+
+.previous-post {
+    float: left;
+}
+
+.next-post {
+    float: right;
+}
