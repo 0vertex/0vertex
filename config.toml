@@ -2,6 +2,8 @@ baseURL = 'http://example.org/'
 languageCode = 'en-us'
 title = 'My New Hugo Site'
 
+markup.highlight.noClasses=false
+
 [related]
 threshold = 80
 includeNewer = true
