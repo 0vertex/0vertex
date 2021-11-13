@@ -3,4 +3,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{.Title}}</title>
 
-<link rel="stylesheet" href="/css/main.css">
+{{ $css := resources.Match "css/*.css" | resources.Concat "css/name.css" | minify }}
+<link rel="stylesheet" href="{{ $css.Permalink }}">

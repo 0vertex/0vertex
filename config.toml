@@ -1,6 +1,6 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://0vertex.github.io/0vertex/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = '0vertex'
 
 markup.highlight.noClasses=false
 

@@ -1,0 +1,106 @@
+<!doctype html><html lang=en>
+<head>
+<link rel=stylesheet href=/css/syntax.css>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title></title>
+<link rel=stylesheet href=https://0vertex.github.io/0vertex/css/name.min.css>
+<script src=https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0})</script>
+<link rel=stylesheet href=/css/single.css>
+</head>
+<body class=container>
+<nav>
+<section class=header-container>
+<h1 class=site-logo-title><a href=/>&lt;0vertex/></a></h1>
+<div class=nav-menu>
+<ul>
+<li><a href=/>Home</a></li>
+<li><a href=/blogs>Blogs</a></li>
+<li><a href=/about>About</a></li>
+</ul>
+</div>
+</section>
+</nav>
+<article class=article>
+<h2><a class=title href=/0vertex/blogs/swift/propertywrapper/>PropertyWrapper</a></h1>
+<p class=time-info>
+<time class=low-info-text>Written on: November 7, 2021</time>
+<span class=low-info-text>by: </span>
+<a class=low-info-text href=/about>Manish</a>
+<span class=low-info-text> - 2 min(Est.)</span>
+</p>
+<h3 id=what-is-a-property-wrapper>What is a property wrapper?</h3>
+<p>Swift 5.1 added a new feature called <code>PropertyWrapper</code>, a clean and easy way of abstracting core logic behind any stored property.
+You might have already seen a few of these like <code>@State</code> <code>@Binding</code> <code>@Pubished</code> etc.</p>
+<blockquote>
+<p>Property Wrapper provides the layer of separation for the business logic of the property and its definition.</p>
+</blockquote>
+<h3 id=example>Example</h3>
+<p>Let&rsquo;s say we need to build a solution for a theme based color system, where every property will have a different color for light and
+dark mode.</p>
+<ul>
+<li><strong>Step 1</strong> - <em>Create an enum naming <code>Appearance</code> with light and dark caseses.</em></li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=kd>enum</span> <span class=nc>Appearance</span> <span class=p>{</span>
+    <span class=k>case</span> <span class=n>light</span>
+    <span class=k>case</span> <span class=n>dark</span>
+<span class=p>}</span>
+</code></pre></div><ul>
+<li><strong>Step 2</strong> - <em>Create a global property naming <code>currentMode</code>, which will define the current appearance mode.</em></li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=kd>var</span> <span class=nv>currentMode</span> <span class=p>=</span> <span class=n>Appearance</span><span class=p>.</span><span class=n>dark</span>
+</code></pre></div><ul>
+<li><strong>Step 3</strong> - <em>Create a property wrapper naming <code>ThemedColor</code>, which will store and return currect color based on current appearance mode</em></li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=p>@</span><span class=n>propertyWrapper</span>
+<span class=kd>struct</span> <span class=nc>ThemedColor</span> <span class=p>{</span>
+    
+    <span class=kd>private</span> <span class=kd>var</span> <span class=nv>light</span><span class=p>:</span> <span class=n>UIColor</span>
+    <span class=kd>private</span> <span class=kd>var</span> <span class=nv>dark</span><span class=p>:</span> <span class=n>UIColor</span>
+    
+    <span class=kd>var</span> <span class=nv>wrappedValue</span><span class=p>:</span> <span class=n>UIColor</span> <span class=p>{</span>
+        <span class=kr>get</span> <span class=p>{</span> <span class=p>((</span><span class=n>currentMode</span> <span class=p>==</span> <span class=p>.</span><span class=n>light</span><span class=p>)</span> <span class=p>?</span> <span class=n>light</span> <span class=p>:</span> <span class=n>dark</span><span class=p>)</span> <span class=p>}</span>
+    <span class=p>}</span>
+    
+    <span class=kd>init</span><span class=p>(</span><span class=n>light</span><span class=p>:</span> <span class=n>UIColor</span> <span class=p>=</span> <span class=p>.</span><span class=n>white</span><span class=p>,</span> <span class=n>dark</span><span class=p>:</span> <span class=n>UIColor</span> <span class=p>=</span> <span class=p>.</span><span class=n>black</span><span class=p>)</span> <span class=p>{</span>
+        <span class=kc>self</span><span class=p>.</span><span class=n>light</span> <span class=p>=</span> <span class=n>light</span>
+        <span class=kc>self</span><span class=p>.</span><span class=n>dark</span> <span class=p>=</span> <span class=n>dark</span>
+    <span class=p>}</span>
+    
+<span class=p>}</span>
+</code></pre></div><ul>
+<li><strong>Step 4</strong> - <em>Create a <code>Color</code> struct, which will contain all the color properties</em></li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=kd>struct</span> <span class=nc>Color</span> <span class=p>{</span>
+    <span class=p>@</span><span class=n>ThemedColor</span><span class=p>(</span><span class=n>light</span><span class=p>:</span> <span class=p>.</span><span class=n>yellow</span><span class=p>,</span> <span class=n>dark</span><span class=p>:</span> <span class=p>.</span><span class=n>white</span><span class=p>)</span>
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kd>var</span> <span class=nv>titleColor</span><span class=p>:</span> <span class=n>UIColor</span>
+
+    <span class=p>@</span><span class=n>ThemedColor</span><span class=p>(</span><span class=n>light</span><span class=p>:</span> <span class=p>.</span><span class=n>blue</span><span class=p>,</span> <span class=n>dark</span><span class=p>:</span> <span class=p>.</span><span class=n>black</span><span class=p>)</span>
+    <span class=kd>public</span> <span class=kd>static</span> <span class=kd>var</span> <span class=nv>backgroundColor</span><span class=p>:</span> <span class=n>UIColor</span>
+<span class=p>}</span>
+</code></pre></div><ul>
+<li><strong>Step 5</strong> - <em>Use</em></li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-swift data-lang=swift><span class=n>Color</span><span class=p>.</span><span class=n>titleColor</span>
+
+<span class=n>Color</span><span class=p>.</span><span class=n>backgroundColor</span>
+</code></pre></div><p><code>titleColor</code> will return <em>yellow</em> for light mode and <em>white</em> for dark mode, similarly <code>backgroundColor</code> will return <em>blue</em> for light mode and <em>black</em> for dark mode.</p>
+<p>Try this by changing the value for <code>currentMode</code> property to <code>.dark</code> or <code>.light</code>.</p>
+</article>
+<div class=prev-next-section>
+<div class="prev-next-post previous-post">
+<h4>Previous Article</h4>
+<a class=link-reverse href="https://0vertex.github.io/0vertex/about/?ref=footer">About</a>
+</div>
+</div>
+<footer class=footer-container>
+<span>© 2021 - Manish</span>
+<div class=footer-links>
+<a href=/sitemap.xml>Site Map</a>
+<a href=/index.xml>RSS Feed</a>
+</div>
+</footer>
+</body>
+</html>
